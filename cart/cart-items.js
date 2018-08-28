@@ -19,4 +19,4 @@ cart = [
     }
 ];
 
-module.export = cart;
+module.exports = cart;
