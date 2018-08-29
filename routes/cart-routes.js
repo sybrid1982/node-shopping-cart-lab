@@ -3,6 +3,7 @@
 const express = require('express');
 const cartRoutes = express.Router();
 const cartItems = require('../cart/cart-items');
+let lastIndex = cartItems.length;
 
 cartRoutes.get('/cart', (req, res) => {
     console.log('GET request');
@@ -22,6 +23,15 @@ cartRoutes.post('/cart', (req, res) => {
 
 cartRoutes.delete('/cart/:id', (req, res) => {
     console.log('DELETE request with ID: ' + req.params.id);
+    let itemIndex = -1;
+    for(let i = 0; i < lastIndex; i++) {
+        if(req.params.id == cartItems[i].id) {
+            itemIndex = i;
+        }
+    }
+    if(itemIndex >= 0) {
+        cartItems.splice(itemIndex, 1);
+    }
     res.send(cartItems);
 
 });
