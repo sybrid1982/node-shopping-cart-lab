@@ -21,8 +21,14 @@ cartRoutes.put('/cart/:id', (req, res) => {
 
 cartRoutes.post('/cart', (req, res) => {
     console.log('POST request with Body: ' + req.body);
+    let newItem = {
+        product: req.body.product,
+        price: req.body.price,
+        quantity: req.body.quantity,
+        id: lastIndex++
+    }
+    cartItems.push(newItem);
     res.send(cartItems);
-
 });
 
 cartRoutes.delete('/cart/:id', (req, res) => {
