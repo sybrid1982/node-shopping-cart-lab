@@ -5,3 +5,27 @@
 .cart > :nth-child(2n+1) {
     background-color: bisque;
 }
+
+.cart > * {
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 200px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    margin: 20px;
+}
+
+.cart {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.cart > * > button {
+    font-size: 16px;
+    border: 2px solid black;
+}
+
+.cart > * > .button__delete  {
+    background-color: red;
+}

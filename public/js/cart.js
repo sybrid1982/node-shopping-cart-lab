@@ -24,8 +24,12 @@ const cart = {
             // });
         }
 
-        vm.getTotal = (item) => {
+        vm.getTotalForItem = (item) => {
             return ((Math.round(item.quantity * item.price * 100)) / 100).toFixed(2);
+        }
+
+        vm.getCartTotal = () => {
+            let total = 0;
         }
     }]
 }

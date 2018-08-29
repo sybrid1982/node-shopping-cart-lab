@@ -5,8 +5,8 @@
         <p>Product: {{ item.product }}</p>
         <p>Price: ${{ item.price }}</p>
         <p>Quantity: {{ item.quantity }}</p>
-        <p>Total: ${{ $ctrl.getTotal(item); }}</p>
-        <button ng-click="$ctrl.delete(item.id);">Delete</button>
+        <p>Total: ${{ $ctrl.getTotalForItem(item); }}</p>
+        <button class="button__delete" ng-click="$ctrl.delete(item.id);">X</button>
         <button ng-click="$ctrl.update(item.id);">Change Quantity</button>
     </section>
 </section>
