@@ -12,6 +12,10 @@ cartRoutes.get('/cart', (req, res) => {
 
 cartRoutes.put('/cart/:id', (req, res) => {
     console.log('PUT request with ID: ' + req.params.id);
+    let itemIndex = getArrayIndexOfID(req.params.id);
+    if(itemIndex >= 0) {
+        cartItems[itemIndex].quantity = req.body.quantity;
+    }
     res.send(cartItems);
 });
 
@@ -23,17 +27,21 @@ cartRoutes.post('/cart', (req, res) => {
 
 cartRoutes.delete('/cart/:id', (req, res) => {
     console.log('DELETE request with ID: ' + req.params.id);
+    let itemIndex = getArrayIndexOfID(req.params.id);
+    if(itemIndex >= 0) {
+        cartItems.splice(itemIndex, 1);
+    }
+    res.send(cartItems);
+});
+
+const getArrayIndexOfID = (id) => {
     let itemIndex = -1;
     for(let i = 0; i < lastIndex; i++) {
         if(req.params.id == cartItems[i].id) {
             itemIndex = i;
         }
     }
-    if(itemIndex >= 0) {
-        cartItems.splice(itemIndex, 1);
-    }
-    res.send(cartItems);
-
-});
+    return itemIndex;
+}
 
 module.exports = cartRoutes;

@@ -24,7 +24,8 @@ function CartService($http) {
     vm.updateItem = (id, quantity) => {
         return $http({
             url: '/cart/' + id,
-            method: "PUT"
+            method: "PUT",
+            data: {quantity}
         }).then((response) => {
             vm.items = response.data;
             return vm.items;

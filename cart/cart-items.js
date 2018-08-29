@@ -16,6 +16,18 @@ cart = [
         product: "Milk",
         price: 3,
         quantity: 1,
+    },
+    {
+        id: 3,
+        product: "Ham",
+        price: 15,
+        quantity: 2
+    },
+    {
+        id: 4,
+        product: "Bananas",
+        price: .49,
+        quantity: 7
     }
 ];
 
