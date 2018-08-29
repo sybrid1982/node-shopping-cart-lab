@@ -5,6 +5,7 @@ const app = express();
 const cartRoutes = require("./routes/cart-routes");
 
 app.use(express.static("./public"));
+app.use(express.json());
 app.use("/", cartRoutes);
 
 const port = 5000;

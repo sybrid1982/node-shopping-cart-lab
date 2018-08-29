@@ -5,12 +5,30 @@ function CartService($http) {
 
     vm.getAllItems = () => {
         return $http({
-            url: '/items',
+            url: '/cart',
             method: 'GET'
         }).then((response) => {
             vm.items = response.data;
             return vm.items;
         });
+    }
+    vm.deleteItem = (id) => {
+        return $http({
+            url: '/cart/' + id,
+            method: "DELETE"
+        }).then((response) => {
+            vm.items = response.data;
+            return vm.items;
+        });
+    }
+    vm.updateItem = (id, quantity) => {
+        return $http({
+            url: '/cart/' + id,
+            method: "PUT"
+        }).then((response) => {
+            vm.items = response.data;
+            return vm.items;
+        })
     }
 };
 
