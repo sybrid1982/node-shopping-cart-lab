@@ -2,52 +2,47 @@
 
 const express = require('express');
 const cartRoutes = express.Router();
-const cartItems = require('../cart/cart-items');
-let lastIndex = cartItems.length;
+const pool = require('../pg-connection-pool')
 
 cartRoutes.get('/cart', (req, res) => {
     console.log('GET request');
-    res.send(cartItems);
+    pool.query('select * from shoppingcart').then((response) => {
+        res.send(response.rows);
+    });
 });
 
 cartRoutes.put('/cart/:id', (req, res) => {
     console.log('PUT request with ID: ' + req.params.id);
-    let itemIndex = getArrayIndexOfID(req.params.id);
-    if(itemIndex >= 0) {
-        cartItems[itemIndex].quantity = req.body.quantity;
-    }
-    res.send(cartItems);
+    let newQuantity = parseInt(req.body.quantity);
+    let targetID = parseInt(req.params.id);
+    pool.query('update shoppingcart set quantity=$1::int where id=$2::int', [newQuantity, targetID]).then(() => {
+        pool.query('select * from shoppingcart;').then((response2) => {
+            res.send(response2.rows);
+        });
+    });
 });
 
 cartRoutes.post('/cart', (req, res) => {
     console.log('POST request with Body: ' + req.body);
     let newItem = {
-        id: lastIndex++,
         product: req.body.product,
         price: req.body.price,
         quantity: req.body.quantity,
-    }
-    cartItems.push(newItem);
-    res.send(cartItems);
+    };
+    pool.query('insert into shoppingcart (product, price, quantity) values ($1::text, $2::float, $3::int);', [newItem.product, newItem.price, newItem.quantity]).then(() => {
+        pool.query('select * from shoppingcart;').then((response2) => {
+            res.send(response2.rows);
+        });
+    });
 });
 
 cartRoutes.delete('/cart/:id', (req, res) => {
     console.log('DELETE request with ID: ' + req.params.id);
-    let itemIndex = getArrayIndexOfID(req.params.id);
-    if(itemIndex >= 0) {
-        cartItems.splice(itemIndex, 1);
-    }
-    res.send(cartItems);
+    pool.query('delete from shoppingcart where id=$1::int;', [parseInt(req.params.id)]).then(() => {
+        pool.query('select * from shoppingcart').then((response2) => {
+            res.send(response2.rows);
+        });
+    });
 });
-
-const getArrayIndexOfID = (id) => {
-    let itemIndex = -1;
-    for(let i = 0; i < lastIndex; i++) {
-        if(req.params.id == cartItems[i].id) {
-            itemIndex = i;
-        }
-    }
-    return itemIndex;
-}
 
 module.exports = cartRoutes;

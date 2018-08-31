@@ -11,7 +11,7 @@ function CartService($http) {
             vm.items = response.data;
             return vm.items;
         });
-    }
+    };
     vm.deleteItem = (id) => {
         return $http({
             url: '/cart/' + id,
@@ -20,12 +20,26 @@ function CartService($http) {
             vm.items = response.data;
             return vm.items;
         });
-    }
+    };
     vm.updateItem = (id, quantity) => {
         return $http({
             url: '/cart/' + id,
             method: "PUT",
             data: {quantity}
+        }).then((response) => {
+            vm.items = response.data;
+            return vm.items;
+        })
+    };
+    vm.addItem = (item) => {
+        return $http({
+            url: '/cart',
+            method: 'POST',
+            data: {
+                product: item.product,
+                price: item.price,
+                quantity: item.quantity
+            }
         }).then((response) => {
             vm.items = response.data;
             return vm.items;

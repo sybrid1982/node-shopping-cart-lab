@@ -1,12 +1,20 @@
 <h3>Cart Contents:</h3>
 <section class='cart'>
-    <section ng-repeat="item in $ctrl.cart">
+    <section ng-repeat="item in $ctrl.cart | orderBy: 'id'">
         <p>ID: {{ item.id }}</p>
         <p>Product: {{ item.product }}</p>
         <p>Price: ${{ item.price }}</p>
         <p>Quantity: {{ item.quantity }}</p>
         <p>Total: ${{ $ctrl.getTotalForItem(item); }}</p>
         <button class="button__delete" ng-click="$ctrl.delete(item.id);">X</button>
-        <button ng-click="$ctrl.update(item.id);">Change Quantity</button>
+        <button ng-click="$ctrl.update(item.id, $ctrl.newItem.quantity);">Change Quantity</button>
     </section>
+    <form ng-submit="$ctrl.addItem($ctrl.newItem);">
+        <p>New Item</p>
+        <span><label>Item Name: </label><input type='text' placeholder="Item Name" ng-model="$ctrl.newItem.product"></span>
+        <span><label>Item Price: </label><input type='text' placeholder="Price"  ng-model="$ctrl.newItem.price"></span>
+        <span><label>Quantity: </label><input type='number' placeholder="Quantity"  ng-model="$ctrl.newItem.quantity"></span>
+        <p>Total: ${{ $ctrl.newItem.price * $ctrl.newItem.quantity || 0 }}</p>
+        <button>Add Item</button>
+    </form>
 </section>
