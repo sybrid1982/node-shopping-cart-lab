@@ -1,3 +1,7 @@
+h1 {
+    text-align: center;
+}
+
 .cart > :nth-child(2n) {
     background-color: beige;
 }
@@ -17,7 +21,7 @@
 .cart > * {
     border: 2px solid black;
     border-radius: 10px;
-    width: 200px;
+    width: 180px;
     padding: 20px;
     margin: 20px;
 }
@@ -34,13 +38,13 @@
     border: none;
     background-color: none;
     font-size: 16px;
-    width: 60%;
+    width: 55%;
 }
 
 .cart > form > span > label {
     background-color: none;
     height: 19px;
-    width: 40%;
+    width: 45%;
 }
 
 .cart > * > p {
